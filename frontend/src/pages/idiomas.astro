@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getLanguagePhrase } from '../services/api';
+
+const data = await getLanguagePhrase();
+---
+
+<Layout title="Idiomas">
+	<main>
+		<h1>Frases Dinámicas en Varios Idiomas</h1>
+		<div>
+			<h2>{data.language.charAt(0).toUpperCase() + data.language.slice(1)}</h2>
+			<p><strong>Frase:</strong> {data.phrase}</p>
+			<p><strong>Traducción:</strong> {data.translation}</p>
+			<p><strong>Pronunciación:</strong> {data.pronunciation}</p>
+		</div>
+	</main>
+</Layout>
