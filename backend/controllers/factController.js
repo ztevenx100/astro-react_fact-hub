@@ -1,14 +1,14 @@
-const facts = {
-    matematicas: "Un número primo es un número natural mayor que 1 que no tiene divisores positivos más que 1 y él mismo.",
-    ciencias: "El cuerpo humano adulto tiene 206 huesos.",
-    'historia-politica': "La Segunda Guerra Mundial comenzó en 1939.",
-    'tecnologia-innovacion': "El primer programador de computadoras fue Ada Lovelace.",
-    'diseño-ingenieria': "La Torre Eiffel fue diseñada por Gustave Eiffel.",
-    'supervivencia-medicina': "La penicilina fue descubierta por Alexander Fleming en 1928."
-};
+const facts = require('../data/facts');
 
 exports.getFact = (req, res) => {
     const { category } = req.params;
-    const fact = facts[category] || "Categoría no encontrada. Por favor, elige una de las categorías disponibles.";
-    res.json({ fact });
+    const categoryFacts = facts[category];
+
+    if (categoryFacts && categoryFacts.length > 0) {
+        const randomIndex = Math.floor(Math.random() * categoryFacts.length);
+        const fact = categoryFacts[randomIndex];
+        res.json({ fact });
+    } else {
+        res.status(404).json({ fact: "Categoría no encontrada o no hay datos disponibles. Por favor, elige una de las categorías." });
+    }
 };

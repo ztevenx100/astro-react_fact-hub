@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+
+interface CategoryMenuProps {
+    selectedCategory: string;
+    onCategoryChange: (category: string) => void;
+}
 
 const categories = [
     { value: 'matematicas', label: 'Matemáticas' },
@@ -9,17 +14,14 @@ const categories = [
     { value: 'supervivencia-medicina', label: 'Supervivencia/Medicina' },
 ];
 
-const CategoryMenu = () => {
-    const [selectedCategory, setSelectedCategory] = useState(categories[0].value);
-
+const CategoryMenu: React.FC<CategoryMenuProps> = ({ selectedCategory, onCategoryChange }) => {
     return (
         <div>
             <label htmlFor="category-select">Elige una categoría: </label>
             <select 
-                id="category-select" 
-                data-category-selector
+                id="category-select"
                 value={selectedCategory} 
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => onCategoryChange(e.target.value)}
             >
                 {categories.map((category) => (
                     <option key={category.value} value={category.value}>
