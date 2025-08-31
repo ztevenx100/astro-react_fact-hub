@@ -1,12 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import FactGenerator from '../components/FactGenerator';
+import MainHub from '../components/MainHub';
 ---
 
-<Layout title="Fact Hub">
-	<main>
-		<h1>Fact Hub</h1>
-		<p>¡Bienvenido a Fact Hub! Selecciona una categoría y genera un dato curioso.</p>
-		<FactGenerator client:load />
-	</main>
+<Layout title="Fact Hub - Datos Curiosos y Frases del Mundo">
+	<MainHub client:load />
 </Layout>
