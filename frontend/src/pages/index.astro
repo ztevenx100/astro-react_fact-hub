@@ -1,33 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import CategoryMenu from '../components/CategoryMenu';
-import FactCard from '../components/FactCard';
+import FactGenerator from '../components/FactGenerator';
 ---
 
 <Layout title="Fact Hub">
 	<main>
 		<h1>Fact Hub</h1>
-		<p>¡Bienvenido a Fact Hub! Selecciona una categoría para obtener un dato curioso.</p>
-		<CategoryMenu client:load />
-		<FactCard client:load />
-		<button id="generate-fact">Generar dato curioso</button>
+		<p>¡Bienvenido a Fact Hub! Selecciona una categoría y genera un dato curioso.</p>
+		<FactGenerator client:load />
 	</main>
 </Layout>
-
-<script>
-	import { getFact } from '../services/api';
-
-	const button = document.getElementById('generate-fact');
-	const factContainer = document.querySelector('[data-fact-container]');
-	const categorySelector = document.querySelector('[data-category-selector]');
-
-	async function displayFact() {
-		if (factContainer && categorySelector) {
-			const selectedCategory = (categorySelector as HTMLSelectElement).value;
-			const data = await getFact(selectedCategory);
-			factContainer.textContent = data.fact;
-		}
-	}
-
-	button?.addEventListener('click', displayFact);
-</script>

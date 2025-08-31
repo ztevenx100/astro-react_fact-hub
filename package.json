@@ -1,0 +1,17 @@
+{
+  "name": "fact-hub",
+  "version": "1.0.0",
+  "description": "Proyecto monorepo para Fact Hub con Astro, React, Node.js y Express.",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "dev": "concurrently \"npm:dev --prefix backend\" \"npm:dev --prefix frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

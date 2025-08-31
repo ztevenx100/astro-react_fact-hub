@@ -1,9 +1,14 @@
 import React from 'react';
 
-const FactCard = () => {
+interface FactCardProps {
+    fact: string;
+    isLoading: boolean;
+}
+
+const FactCard: React.FC<FactCardProps> = ({ fact, isLoading }) => {
     return (
-        <div data-fact-container>
-            <p>Aquí se mostrará el dato curioso.</p>
+        <div>
+            {isLoading ? <p>Cargando...</p> : <p>{fact}</p>}
         </div>
     );
 };
