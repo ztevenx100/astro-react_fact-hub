@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { getLanguagePhrase } from '../services/api';
+import FavoriteButton from './FavoriteButton';
 
 // Definimos el tipo para los idiomas disponibles
 type Language = 'espanol' | 'ingles' | 'frances' | 'aleman' | 'italiano' | 'portugues' | 'japones' | 'chino' | 'ruso' | 'latin' | 'error';
@@ -146,9 +147,22 @@ const LanguageGenerator = () => {
                             <div className="space-y-6 text-center">
                                 {/* Frase principal */}
                                 <div className="space-y-2">
-                                    <h3 className="text-gray-400 text-sm font-medium uppercase tracking-wide">
-                                        📝 Frase Original
-                                    </h3>
+                                    <div className="flex items-center justify-center space-x-3">
+                                        <h3 className="text-gray-400 text-sm font-medium uppercase tracking-wide">
+                                            📝 Frase Original
+                                        </h3>
+                                        {languageData.phrase && languageData.phrase !== 'Haz clic en el botón para generar una frase en un idioma aleatorio.' && (
+                                            <FavoriteButton 
+                                                item={{ 
+                                                    content: languageData.phrase, 
+                                                    type: 'phrase' as const, 
+                                                    language: languageData.language,
+                                                    translation: languageData.translation,
+                                                    pronunciation: languageData.pronunciation
+                                                }} 
+                                            />
+                                        )}
+                                    </div>
                                     <blockquote className="text-xl sm:text-2xl lg:text-3xl font-medium text-gray-100 leading-relaxed">
                                         "{languageData.phrase}"
                                     </blockquote>

@@ -27,13 +27,15 @@ const { title } = Astro.props;
 						<a href="/" class="text-2xl font-bold text-primary-400 hover:text-primary-300 transition-colors duration-200">
 							🎯 Fact Hub
 						</a>
-						<div class="flex space-x-6">
+						<div class="flex items-center space-x-6">
 							<a href="/" class="text-gray-300 hover:text-white transition-colors duration-200 font-medium">
 								🏠 Inicio
 							</a>
 							<a href="/idiomas" class="text-gray-300 hover:text-white transition-colors duration-200 font-medium">
 								🌍 Solo Idiomas
 							</a>
+							<!-- Theme Toggle will be added here by React component -->
+							<div id="theme-toggle-container"></div>
 						</div>
 					</div>
 				</nav>

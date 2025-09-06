@@ -18,3 +18,25 @@ exports.getLanguagePhrase = (req, res) => {
         });
     }
 };
+
+exports.getAllLanguagesPhrases = (req, res) => {
+    try {
+        const allPhrases = {};
+        const languages = Object.keys(phrases);
+
+        languages.forEach(language => {
+            const languagePhrases = phrases[language];
+            if (languagePhrases && languagePhrases.length > 0) {
+                const randomIndex = Math.floor(Math.random() * languagePhrases.length);
+                allPhrases[language] = {
+                    language: language,
+                    ...languagePhrases[randomIndex]
+                };
+            }
+        });
+
+        res.json({ phrases: allPhrases });
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener frases de todos los idiomas." });
+    }
+};

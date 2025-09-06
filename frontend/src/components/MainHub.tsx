@@ -3,8 +3,9 @@ import FactGenerator from './FactGenerator';
 import LanguageGenerator from './LanguageGenerator';
 import AllCategoriesFacts from './AllCategoriesFacts';
 import AllLanguagesPhrases from './AllLanguagesPhrases';
+import FavoritesPanel from './FavoritesPanel';
 
-type TabType = 'facts' | 'languages' | 'all-facts' | 'all-languages';
+type TabType = 'facts' | 'languages' | 'all-facts' | 'all-languages' | 'favorites';
 
 interface Tab {
     id: TabType;
@@ -42,6 +43,13 @@ const tabs: Tab[] = [
         icon: '🗺️',
         color: 'teal',
         description: 'Descubre frases de los 10 idiomas disponibles al mismo tiempo'
+    },
+    {
+        id: 'favorites',
+        label: 'Mis Favoritos',
+        icon: '❤️',
+        color: 'red',
+        description: 'Accede a todos tus datos y frases favoritos guardados'
     }
 ];
 
@@ -49,7 +57,7 @@ const MainHub: React.FC = () => {
     const [activeTab, setActiveTab] = useState<TabType>('facts');
 
     const getTabStyles = (tabId: TabType, isActive: boolean) => {
-        const baseStyles = "relative px-2 sm:px-3 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 text-xs sm:text-sm";
+        const baseStyles = "relative px-1 sm:px-2 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 text-xs sm:text-sm";
         
         if (tabId === 'facts') {
             return isActive 
@@ -63,10 +71,14 @@ const MainHub: React.FC = () => {
             return isActive 
                 ? `${baseStyles} bg-gradient-to-r from-emerald-600 to-emerald-500 text-white shadow-lg shadow-emerald-500/25 focus:ring-emerald-500/50`
                 : `${baseStyles} bg-dark-700/50 text-gray-300 hover:bg-dark-600/50 hover:text-white border border-dark-600 focus:ring-emerald-500/30`;
-        } else {
+        } else if (tabId === 'all-languages') {
             return isActive 
                 ? `${baseStyles} bg-gradient-to-r from-teal-600 to-teal-500 text-white shadow-lg shadow-teal-500/25 focus:ring-teal-500/50`
                 : `${baseStyles} bg-dark-700/50 text-gray-300 hover:bg-dark-600/50 hover:text-white border border-dark-600 focus:ring-teal-500/30`;
+        } else {
+            return isActive 
+                ? `${baseStyles} bg-gradient-to-r from-red-600 to-red-500 text-white shadow-lg shadow-red-500/25 focus:ring-red-500/50`
+                : `${baseStyles} bg-dark-700/50 text-gray-300 hover:bg-dark-600/50 hover:text-white border border-dark-600 focus:ring-red-500/30`;
         }
     };
 
@@ -74,14 +86,16 @@ const MainHub: React.FC = () => {
         if (activeTab === 'facts') return 'from-primary-400 via-primary-300 to-primary-500';
         if (activeTab === 'all-facts') return 'from-purple-400 via-purple-300 to-purple-500';
         if (activeTab === 'languages') return 'from-emerald-400 via-emerald-300 to-emerald-500';
-        return 'from-teal-400 via-teal-300 to-teal-500';
+        if (activeTab === 'all-languages') return 'from-teal-400 via-teal-300 to-teal-500';
+        return 'from-red-400 via-red-300 to-red-500';
     };
 
     const getCurrentAccentColor = () => {
         if (activeTab === 'facts') return 'text-primary-400';
         if (activeTab === 'all-facts') return 'text-purple-400';
         if (activeTab === 'languages') return 'text-emerald-400';
-        return 'text-teal-400';
+        if (activeTab === 'all-languages') return 'text-teal-400';
+        return 'text-red-400';
     };
 
     const getCurrentBadges = () => {
@@ -103,11 +117,17 @@ const MainHub: React.FC = () => {
                 { text: '🌎 10 idiomas', color: 'bg-emerald-600/10' },
                 { text: '🔊 Con pronunciación', color: 'bg-emerald-600/10' }
             ];
-        } else {
+        } else if (activeTab === 'all-languages') {
             return [
                 { text: '🌍 Frases de 10 idiomas', color: 'bg-teal-600/10' },
                 { text: '🔊 Pronunciación incluida', color: 'bg-teal-600/10' },
                 { text: '📝 Traducción completa', color: 'bg-teal-600/10' }
+            ];
+        } else {
+            return [
+                { text: '❤️ Contenido guardado', color: 'bg-red-600/10' },
+                { text: '🔍 Búsqueda avanzada', color: 'bg-red-600/10' },
+                { text: '📱 Acceso rápido', color: 'bg-red-600/10' }
             ];
         }
     };
@@ -140,7 +160,7 @@ const MainHub: React.FC = () => {
             {/* Navegación por Pestañas */}
             <div className="max-w-6xl mx-auto">
                 <div className="bg-dark-800/50 backdrop-blur-sm border border-dark-700/50 rounded-2xl p-2 shadow-xl">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
@@ -154,7 +174,8 @@ const MainHub: React.FC = () => {
                                         <div className="text-xs opacity-75 font-normal hidden sm:block">
                                             {tab.id === 'facts' ? '6 categorías' : 
                                              tab.id === 'all-facts' ? 'Todos juntos' : 
-                                             tab.id === 'languages' ? '10 idiomas' : 'Vista global'}
+                                             tab.id === 'languages' ? '10 idiomas' : 
+                                             tab.id === 'all-languages' ? 'Vista global' : 'Guardados'}
                                         </div>
                                     </div>
                                 </div>
@@ -193,6 +214,12 @@ const MainHub: React.FC = () => {
                     activeTab === 'all-languages' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none absolute'
                 }`}>
                     {activeTab === 'all-languages' && <AllLanguagesPhrases />}
+                </div>
+                
+                <div className={`transition-all duration-500 transform ${
+                    activeTab === 'favorites' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none absolute'
+                }`}>
+                    {activeTab === 'favorites' && <FavoritesPanel />}
                 </div>
             </div>
 
