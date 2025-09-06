@@ -30,7 +30,7 @@ const FactGenerator = () => {
 
             {/* Tarjeta del dato curioso */}
             <div className="transform transition-all duration-500 hover:scale-[1.02]">
-                <FactCard fact={fact} isLoading={isLoading} />
+                <FactCard fact={fact} isLoading={isLoading} category={category} />
             </div>
 
             {/* Botón principal */}

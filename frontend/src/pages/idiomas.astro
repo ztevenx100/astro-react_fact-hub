@@ -1,27 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import LanguageGenerator from '../components/LanguageGenerator';
+import App from '../components/App.tsx';
 ---
 
 <Layout title="Idiomas - Fact Hub">
-	<div class="text-center space-y-6 animate-fade-in">
-		<div class="space-y-4">
-			<h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-500 bg-clip-text text-transparent animate-pulse-soft">
-				🌍 Frases del Mundo
-			</h1>
-			<p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-				Explora frases útiles en 
-				<span class="text-emerald-400 font-medium">10 idiomas diferentes</span>. 
-				Perfecto para viajeros, estudiantes y amantes de las culturas del mundo.
-			</p>
-		</div>
-		
-		<div class="flex justify-center space-x-2 text-sm text-gray-500">
-			<span class="px-3 py-1 bg-emerald-600/10 rounded-full">🗣️ 50+ frases útiles</span>
-			<span class="px-3 py-1 bg-emerald-600/10 rounded-full">🌎 10 idiomas</span>
-			<span class="px-3 py-1 bg-emerald-600/10 rounded-full">🔊 Con pronunciación</span>
-		</div>
-	</div>
-	
-	<LanguageGenerator client:load />
+	<App client:load />
 </Layout>

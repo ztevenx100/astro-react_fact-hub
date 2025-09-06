@@ -1,11 +1,13 @@
 import React from 'react';
+import FavoriteButton from './FavoriteButton';
 
 interface FactCardProps {
     fact: string;
     isLoading: boolean;
+    category?: string;
 }
 
-const FactCard: React.FC<FactCardProps> = ({ fact, isLoading }) => {
+const FactCard: React.FC<FactCardProps> = ({ fact, isLoading, category = 'matematicas' }) => {
     return (
         <div className="relative">
             <div className="bg-gradient-to-br from-dark-800/80 to-dark-900/80 backdrop-blur-sm border border-dark-700/50 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl min-h-[200px] flex items-center justify-center">
@@ -42,9 +44,20 @@ const FactCard: React.FC<FactCardProps> = ({ fact, isLoading }) => {
 
                         {/* Contenido del dato curioso */}
                         <div className="text-center space-y-4 animate-slide-up">
-                            <h3 className="text-gray-400 text-sm font-medium uppercase tracking-wide">
-                                Dato Curioso
-                            </h3>
+                            <div className="flex items-center justify-center space-x-3">
+                                <h3 className="text-gray-400 text-sm font-medium uppercase tracking-wide">
+                                    Dato Curioso
+                                </h3>
+                                {fact && fact !== 'Haz clic en el botón para generar un dato curioso.' && (
+                                    <FavoriteButton 
+                                        item={{ 
+                                            content: fact, 
+                                            type: 'fact' as const, 
+                                            category 
+                                        }} 
+                                    />
+                                )}
+                            </div>
                             
                             <blockquote className="text-lg sm:text-xl lg:text-2xl font-medium text-gray-100 leading-relaxed max-w-4xl mx-auto">
                                 "{fact}"
