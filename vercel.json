@@ -1,45 +1,28 @@
 {
   "version": 2,
   "name": "fact-hub",
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    },
-    {
-      "src": "backend/package.json",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/backend/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/$1"
-    }
-  ],
-  "functions": {
-    "backend/index.js": {
-      "maxDuration": 30
-    }
-  },
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "build": {
-    "env": {
-      "ENABLE_VC_BUILD": "1"
-    }
-  },
-  "installCommand": "npm install",
-  "buildCommand": "cd frontend && npm run build",
-  "devCommand": "cd frontend && npm run dev",
   "framework": "astro",
-  "outputDirectory": "frontend/dist"
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "functions": {
+    "api/fact/[category].js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/facts/all.js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/language.js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/language/[language].js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/languages/all.js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/health.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
 }
