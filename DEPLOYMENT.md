@@ -1,13 +1,52 @@
-# Deployment Configuration Guide
+# 🚀 Configuración de Deployment en Vercel
 
-## 🚀 Vercel Setup Instructions
+## 📋 Pre-requisitos
 
-### 1. Vercel CLI Installation
+Para que el CI/CD funcione correctamente, necesitas configurar los siguientes secrets en tu repositorio de GitHub:
+
+### 🔐 GitHub Secrets Requeridos
+
+1. **VERCEL_TOKEN**
+2. **VERCEL_ORG_ID** 
+3. **VERCEL_PROJECT_ID**
+
+## 🛠️ Cómo obtener los valores
+
+### 1. Obtener VERCEL_TOKEN
+
+1. Ve a [Vercel Account Settings](https://vercel.com/account/tokens)
+2. Crea un nuevo token con el nombre "GitHub Actions"
+3. Copia el token generado
+
+### 2. Obtener VERCEL_ORG_ID y VERCEL_PROJECT_ID
+
+Ejecuta este comando en tu terminal local (después de hacer `vercel login`):
+
 ```bash
-npm i -g vercel
+cd d:\myWebappgit\astro-react_fact-hub
+vercel link
 ```
 
-### 2. Login to Vercel
+Esto creará un archivo `.vercel/project.json` con los IDs necesarios:
+
+```json
+{
+  "orgId": "tu-org-id-aqui",
+  "projectId": "tu-project-id-aqui"
+}
+```
+
+### 3. Configurar secrets en GitHub
+
+1. Ve a tu repositorio en GitHub
+2. Navega a **Settings** → **Secrets and variables** → **Actions**
+3. Crea los siguientes secrets:
+
+| Secret Name | Value |
+|-------------|-------|
+| `VERCEL_TOKEN` | El token que generaste en Vercel |
+| `VERCEL_ORG_ID` | El `orgId` del archivo `.vercel/project.json` |
+| `VERCEL_PROJECT_ID` | El `projectId` del archivo `.vercel/project.json` |
 ```bash
 vercel login
 ```
