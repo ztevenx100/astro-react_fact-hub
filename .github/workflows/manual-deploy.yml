@@ -1,4 +1,4 @@
-name: 🔧 Manual Deployment
+name: 🔧 Manual Deployment (Secrets Required)
 
 on:
   workflow_dispatch:

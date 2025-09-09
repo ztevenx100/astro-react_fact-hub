@@ -1,26 +1,4 @@
 # 🔧 CONFIGURACIÓN DE DEPLOYMENT AUTOMÁTICO
-#### 3. Activar Deployment Automático
-Después de configurar los secrets, edita estos archivos:
-
-**`.github/workflows/ci-cd.yml`**
-- Línea 47: Cambia `&& false` por `&& true`
-- Línea 74: Cambia `&& false` por `&& true`
-
-**`.github/workflows/preview.yml`**
-- Línea 13: Cambia `&& false` por `&& true`️ PROBLEMA ACTUAL: Pipeline de CI/CD Requiere Configuración
-
-**TODOS** los deployments automáticos están **temporalmente deshabilitados** hasta que configures los secrets de GitHub.
-
-### 🔍 Error Actual
-```
-Error: Input required and not supplied: vercel-token
-```
-
-### 📋 Workflows Afectados
-- ❌ `ci-cd.yml`: Deployments automáticos (deshabilitado)
-- ❌ `preview.yml`: Preview en Pull Requests (deshabilitado) 
-- ✅ `build-validation.yml`: Solo validación de build (activo)
-- ✅ `manual-deploy.yml`: Deployment manual (requiere secrets)GURACIÓN DE DEPLOYMENT AUTOMÁTICO
 
 ## ⚠️ PROBLEMA ACTUAL: Pipeline de CI/CD Requiere Configuración
 

@@ -1,4 +1,4 @@
-name: 🔍 Preview Deployment (Disabled)
+name: 🔍 Preview Deployment (Disabled - Secrets Required)
 
 on:
   pull_request:
