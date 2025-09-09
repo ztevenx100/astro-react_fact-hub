@@ -1,52 +1,65 @@
-# 🚀 Configuración de Deployment en Vercel
+# 🚀 GUÍA COMPLETA DE DEPLOYMENT
 
-## 📋 Pre-requisitos
+## 📋 Resumen Ejecutivo
 
-Para que el CI/CD funcione correctamente, necesitas configurar los siguientes secrets en tu repositorio de GitHub:
+Este proyecto utiliza **Vercel** para hosting y **GitHub Actions** para CI/CD automatizado. El deployment está configurado para dos ambientes:
 
-### 🔐 GitHub Secrets Requeridos
+- **Staging**: Auto-deploy en push a `develop`
+- **Production**: Auto-deploy en push a `main`
 
-1. **VERCEL_TOKEN**
-2. **VERCEL_ORG_ID** 
-3. **VERCEL_PROJECT_ID**
+## ⚠️ Estado Actual del Deployment
 
-## 🛠️ Cómo obtener los valores
+**Pipeline Status**: ❌ Temporalmente deshabilitado  
+**Razón**: Faltan secrets de GitHub para autenticación con Vercel  
+**Solución**: Seguir los pasos de configuración a continuación
 
-### 1. Obtener VERCEL_TOKEN
+## � Configuración Paso a Paso
 
-1. Ve a [Vercel Account Settings](https://vercel.com/account/tokens)
-2. Crea un nuevo token con el nombre "GitHub Actions"
-3. Copia el token generado
+### Paso 1: Obtener Credenciales de Vercel
 
-### 2. Obtener VERCEL_ORG_ID y VERCEL_PROJECT_ID
+#### 1.1 Vercel Token
+1. Ve a: https://vercel.com/account/tokens
+2. Clickea "Create Token"
+3. Nombre: `GitHub Actions CI/CD`
+4. Scope: Full Account
+5. **Guarda el token** (solo se muestra una vez)
 
-Ejecuta este comando en tu terminal local (después de hacer `vercel login`):
-
-```bash
-cd d:\myWebappgit\astro-react_fact-hub
-vercel link
-```
-
-Esto creará un archivo `.vercel/project.json` con los IDs necesarios:
-
+#### 1.2 Project IDs (Ya disponibles)
+Los IDs del proyecto ya están configurados en `.vercel/project.json`:
 ```json
 {
-  "orgId": "tu-org-id-aqui",
-  "projectId": "tu-project-id-aqui"
+  "orgId": "team_6vx3gci0oNIsfPUosG7L4aqr",
+  "projectId": "prj_y0sxZwBx9DVBA83GVRHGfkNyC1Xq"
 }
 ```
 
-### 3. Configurar secrets en GitHub
+### Paso 2: Configurar GitHub Secrets
 
-1. Ve a tu repositorio en GitHub
-2. Navega a **Settings** → **Secrets and variables** → **Actions**
-3. Crea los siguientes secrets:
+1. **Ir al repositorio**: https://github.com/ztevenx100/astro-react_fact-hub
+2. **Navegar a Settings** → **Secrets and variables** → **Actions**
+3. **Crear estos 3 secrets**:
 
-| Secret Name | Value |
-|-------------|-------|
-| `VERCEL_TOKEN` | El token que generaste en Vercel |
-| `VERCEL_ORG_ID` | El `orgId` del archivo `.vercel/project.json` |
-| `VERCEL_PROJECT_ID` | El `projectId` del archivo `.vercel/project.json` |
+| Secret Name | Value | Fuente |
+|-------------|-------|--------|
+| `VERCEL_TOKEN` | [Token del Paso 1.1] | Vercel Account |
+| `VERCEL_ORG_ID` | `team_6vx3gci0oNIsfPUosG7L4aqr` | .vercel/project.json |
+| `VERCEL_PROJECT_ID` | `prj_y0sxZwBx9DVBA83GVRHGfkNyC1Xq` | .vercel/project.json |
+
+### Paso 3: Activar Deployment Automático
+
+Editar `.github/workflows/ci-cd.yml`:
+
+```yaml
+# Línea 47: Cambiar de
+if: github.ref == 'refs/heads/develop' && false
+# A:
+if: github.ref == 'refs/heads/develop' && true
+
+# Línea 74: Cambiar de  
+if: github.ref == 'refs/heads/main' && false
+# A:
+if: github.ref == 'refs/heads/main' && true
+```
 ```bash
 vercel login
 ```

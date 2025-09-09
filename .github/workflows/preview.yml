@@ -1,4 +1,4 @@
-name: 🔍 Preview Deployment
+name: 🔍 Preview Deployment (Disabled)
 
 on:
   pull_request:
@@ -7,9 +7,9 @@ on:
 
 jobs:
   deploy-preview:
-    name: 🔍 Deploy Preview
+    name: 🔍 Deploy Preview (Disabled until secrets configured)
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && false  # Disabled until secrets are configured
     
     steps:
       - name: 📂 Checkout Repository
@@ -22,8 +22,8 @@ jobs:
 
       - name: 🔍 Quick Build Check
         run: |
-          cd frontend && npm ci && npm run build
-          cd ../backend && npm ci
+          npm ci
+          npm run build
 
       - name: 🚀 Deploy Preview to Vercel
         uses: amondnet/vercel-action@v25
