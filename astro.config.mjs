@@ -6,6 +6,9 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   integrations: [react(), tailwind()],
   output: 'static',
+  srcDir: './frontend/src',
+  publicDir: './frontend/public',
+  outDir: './dist',
   build: {
     assets: 'assets'
   },
@@ -16,20 +19,6 @@ export default defineConfig({
           entryFileNames: 'assets/[name].[hash].js',
           chunkFileNames: 'assets/[name].[hash].js',
           assetFileNames: 'assets/[name].[hash][extname]'
-        }
-      }
-    },
-    server: {
-      proxy: {
-        // Proxy API calls to Vercel dev server during development
-        '/api': {
-          target: 'http://localhost:3000',
-          changeOrigin: true,
-          configure: (proxy, options) => {
-            proxy.on('proxyReq', (proxyReq, req, res) => {
-              console.log('Proxying API request:', req.url);
-            });
-          }
         }
       }
     },

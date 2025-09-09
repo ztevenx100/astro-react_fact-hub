@@ -1,0 +1,56 @@
+name: ✅ Build Validation
+
+on:
+  push:
+    branches: [main, develop, feature/*]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  validate-build:
+    name: ✅ Validate Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📂 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📥 Install Dependencies
+        run: npm ci
+
+      - name: 🏗️ Build Project
+        run: npm run build
+
+      - name: 🧪 Run Tests
+        run: npm run test
+
+      - name: 🔍 Lint Code
+        run: npm run lint
+
+      - name: 📊 Build Success Summary
+        run: |
+          echo "🎉 Build completed successfully!"
+          echo "✅ Dependencies installed"
+          echo "✅ TypeScript compiled"
+          echo "✅ Assets optimized"
+          echo "✅ Tests passed"
+          echo "✅ Code linted"
+          echo ""
+          echo "📦 Ready for deployment once secrets are configured"
+          echo "📋 Next: Configure VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID in GitHub secrets"
+
+      - name: 💡 Configuration Reminder
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        run: |
+          echo "⚠️  DEPLOYMENT DISABLED: Missing GitHub Secrets"
+          echo "📖 See SETUP-SECRETS.md for configuration instructions"
+          echo "🔗 Secrets URL: https://github.com/${{ github.repository }}/settings/secrets/actions"

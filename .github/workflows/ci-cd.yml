@@ -1,0 +1,77 @@
+name: 🧪 CI Pipeline (Build & Test Only)
+
+on:
+  push:
+    branches: [main, develop, feature/*]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  # 🧪 Test and Build
+  test-and-build:
+    name: 🧪 Test & Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📂 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📥 Install Dependencies
+        run: npm ci
+
+      - name: 🏗️ Build Project
+        run: npm run build
+
+      - name: 🧪 Run Tests
+        run: npm run test
+
+      - name: 🔍 Lint Code
+        run: npm run lint
+
+      - name: 📊 Build Success
+        run: |
+          echo "✅ Build completed successfully!"
+          echo "✅ All tests passed!"
+          echo "✅ Linting passed!"
+          echo ""
+          echo "🚀 Ready for deployment once secrets are configured"
+          echo "📖 See SETUP-SECRETS.md for deployment setup"
+
+  # 📋 Deployment Status
+  deployment-status:
+    name: 📋 Deployment Status
+    runs-on: ubuntu-latest
+    needs: test-and-build
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    
+    steps:
+      - name: 📊 Deployment Instructions
+        run: |
+          echo "🚨 AUTOMATIC DEPLOYMENT DISABLED"
+          echo ""
+          echo "Deployment is currently disabled because GitHub secrets are not configured."
+          echo ""
+          echo "To enable automatic deployment:"
+          echo "1. Configure GitHub secrets (see SETUP-SECRETS.md)"
+          echo "2. Enable deployment workflows"
+          echo ""
+          echo "Alternative deployment options:"
+          echo "• Manual workflow: Actions → 'Manual Deployment'"
+          echo "• Vercel CLI: 'vercel --prod'"
+          echo "• Direct GitHub integration in Vercel dashboard"
+          echo ""
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "🎯 This push to MAIN would trigger PRODUCTION deployment"
+          elif [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            echo "🎯 This push to DEVELOP would trigger STAGING deployment"
+          fi
